@@ -2,7 +2,7 @@
 
 **SmartWheelz** is a full-stack web application designed to enhance the car-buying and selling experience using AI-powered search, smart filtering, and seamless user interactions. The platform leverages Next.js 15, React 19, Tailwind CSS, Supabase, Prisma, Google Gemini API, Clerk Authentication, and Arcjet to deliver a high-performance, feature-rich marketplace.
 
-### Key Features & Functionalities:-
+### *Key Features & Functionalities*:-
 
 ### Secure Authentication & User Management
 - **Clerk Authentication** for secure sign-ups/logins.
