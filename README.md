@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SmartWheelz
 
-## Getting Started
+**SmartWheelz** is a full-stack web application designed to enhance the car-buying and selling experience using AI-powered search, smart filtering, and seamless user interactions. The platform leverages Next.js 15, React 19, Tailwind CSS, Supabase, Prisma, Google Gemini API, Clerk Authentication, and Arcjet to deliver a high-performance, feature-rich marketplace.
 
-First, run the development server:
+### Key Features & Functionalities:-
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Secure Authentication & User Management
+- **Clerk Authentication** for secure sign-ups/logins.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Role-based access for **users, sellers, and admins**.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### AI-Powered Car Search & Discovery
+- **AI Image Search**: Users can **upload an image of any car**, and the system finds **visually similar vehicles** in the marketplace using **Gemini API**.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Advanced Text Search & Filters**: Cars can be filtered by **make, model, price range, body type, fuel type, and transmission**.
 
-## Learn More
+### Car Listings with Detailed Information
+- Each car listing includes **high-quality images, specifications, an EMI calculator**, and dealership details.
 
-To learn more about Next.js, take a look at the following resources:
+- Users can **save favorite cars** for later access.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Test Drive Booking System
+- Users can **book test drives** with **real-time availability slots**.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Automated **booking confirmations** with an option to **cancel or reschedule** test drives.
 
-## Deploy on Vercel
+### AI-Powered Car Detail Extraction
+- **AI automatically extracts car specifications** (make, model, year, fuel type, transmission) from **uploaded images**.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Saves time by eliminating **manual data entry** for car sellers.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Admin Dashboard & Car Inventory Management
+- **Powerful analytics** showing **conversion rates, test drives booked, and cars sold**.
+
+- Admins can:
+
+  - Manage **car inventory** (add, edit, delete listings).
+
+  - Feature cars on the homepage.
+
+  - Manage **test drive schedules** and **working hours**.
+
+  - Assign or revoke **admin access** for other users.
+ 
+### Shareable Search Results & URLs
+- **Users can copy and share filtered search results** with others using URL parameters.
+  
+- This follows modern marketplace best practices.
+
+
+
+
+## Tech Stack Breakdown
+
+| Category          | Technology Used                | Purpose                                          |
+|------------------|--------------------------------|--------------------------------------------------|
+| **Frontend**      | React 19 + Next.js 15         | UI, Routing, Server-Side Rendering (SSR)        |
+| **UI Framework**  | ShadCN UI + Tailwind CSS      | Responsive, modern design                        |
+| **Backend**       | Next.js API Routes           | Handles business logic & API requests           |
+| **Database**      | Supabase (PostgreSQL)        | Stores users, car listings, and transactions    |
+| **ORM**          | Prisma ORM                    | Database management & query optimization        |
+| **AI & APIs**    | Google Gemini API + Arcjet    | AI image recognition & data processing          |
+| **Authentication** | Clerk Authentication        | Secure user authentication & authorization      |
+| **Hosting**       | Vercel                        | Cloud-based deployment                          |
+| **Payments (Optional)** | Stripe / Razorpay      | Secure transactions                            |
+
+
+
