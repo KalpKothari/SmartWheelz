@@ -2,7 +2,7 @@ import React from "react";
 import { getCarById } from "@/actions/car-listing";
 import CarDetails from "./_components/car-details";
 import { notFound } from "next/navigation";
-import { auth } from "@clerk/nextjs"; // ✅ Clerk auth
+import { auth } from "@clerk/nextjs/server"; // ✅ USE SERVER IMPORT
 
 export async function generateMetadata({ params }) {
   const { id } = params;
@@ -29,10 +29,9 @@ export async function generateMetadata({ params }) {
 const CarPage = async ({ params }) => {
   const { id } = params;
 
-  // ✅ Get auth user
+  // ✅ FIXED: use server-side auth
   const { userId } = auth();
 
-  // ✅ If NOT signed in, block details
   if (!userId) {
     return (
       <div className="container mx-auto px-4 py-12 text-center">
@@ -44,7 +43,6 @@ const CarPage = async ({ params }) => {
     );
   }
 
-  // ✅ If signed in, show car details
   const result = await getCarById(id);
 
   if (!result.success) {
