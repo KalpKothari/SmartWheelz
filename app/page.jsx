@@ -1,3 +1,4 @@
+import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import HomeSearch from "@/components/home-search";
 import { Button } from "@/components/ui/button";
 import { bodyTypes, carMakes } from "@/lib/data";
@@ -58,8 +59,21 @@ export default async function Home() {
           <Button variant="ghost" className="flex items-center" asChild>
           <Link href="/cars" >
            View All <ChevronRight className="ml-1 h-4 w-4" />
-          </Link>
-          </Button>
+          <SignedIn>
+  <Button variant="ghost" className="flex items-center" asChild>
+    <Link href="/cars">
+      View All <ChevronRight className="ml-1 h-4 w-4" />
+    </Link>
+  </Button>
+</SignedIn>
+
+<SignedOut>
+  <Button variant="ghost" className="flex items-center" asChild>
+    <Link href="/sign-in">
+      View All <ChevronRight className="ml-1 h-4 w-4" />
+    </Link>
+  </Button>
+</SignedOut>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4" >
