@@ -1,4 +1,4 @@
-"use client";
+// ✅ REMOVE THIS: "use client"
 
 import React from "react";
 import { getCarById } from "@/actions/car-listing";
@@ -44,7 +44,6 @@ const CarPage = async ({ params }) => {
     );
   }
 
-  // ✅ only run getCarById if the user is signed in
   const result = await getCarById(id);
 
   if (!result.success) {
