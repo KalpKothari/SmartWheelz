@@ -1,10 +1,8 @@
-// ✅ REMOVE THIS: "use client"
-
 import React from "react";
 import { getCarById } from "@/actions/car-listing";
 import CarDetails from "./_components/car-details";
 import { notFound } from "next/navigation";
-import { auth } from "@clerk/nextjs/server"; // ✅ server import
+import { auth } from "@clerk/nextjs/server";
 
 export async function generateMetadata({ params }) {
   const { id } = params;
@@ -31,7 +29,7 @@ export async function generateMetadata({ params }) {
 const CarPage = async ({ params }) => {
   const { id } = params;
 
-  const { userId } = auth();
+  const { userId } = await auth(); // ✅ you must await!
 
   if (!userId) {
     return (
