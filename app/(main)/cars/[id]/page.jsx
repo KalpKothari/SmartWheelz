@@ -2,7 +2,7 @@ import React from "react";
 import { getCarById } from "@/actions/car-listing";
 import CarDetails from "./_components/car-details";
 import { notFound } from "next/navigation";
-import { auth } from "@clerk/nextjs/server"; // ✅ USE SERVER IMPORT
+import { auth } from "@clerk/nextjs/server"; // ✅ server import
 
 export async function generateMetadata({ params }) {
   const { id } = params;
@@ -29,7 +29,6 @@ export async function generateMetadata({ params }) {
 const CarPage = async ({ params }) => {
   const { id } = params;
 
-  // ✅ FIXED: use server-side auth
   const { userId } = auth();
 
   if (!userId) {
@@ -43,6 +42,7 @@ const CarPage = async ({ params }) => {
     );
   }
 
+  // ✅ only run getCarById if the user is signed in
   const result = await getCarById(id);
 
   if (!result.success) {
