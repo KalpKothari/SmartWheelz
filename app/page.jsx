@@ -52,29 +52,28 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-bold">Browse By Make</h2>
-          <Button variant="ghost" className="flex items-center" asChild>
-          <Link href="/cars" >
-           View All <ChevronRight className="ml-1 h-4 w-4" />
-          <SignedIn>
-  <Button variant="ghost" className="flex items-center" asChild>
-    <Link href="/cars">
-      View All <ChevronRight className="ml-1 h-4 w-4" />
-    </Link>
-  </Button>
-</SignedIn>
+     <section className="py-12 bg-gray-50">
+  <div className="container mx-auto px-4">
+    <div className="flex justify-between items-center mb-8">
+      <h2 className="text-2xl font-bold">Browse By Make</h2>
 
-<SignedOut>
-  <Button variant="ghost" className="flex items-center" asChild>
-    <Link href="/sign-in">
-      View All <ChevronRight className="ml-1 h-4 w-4" />
-    </Link>
-  </Button>
-</SignedOut>
-          </div>
+      <SignedIn>
+        <Button variant="ghost" className="flex items-center" asChild>
+          <Link href="/cars">
+            View All <ChevronRight className="ml-1 h-4 w-4" />
+          </Link>
+        </Button>
+      </SignedIn>
+
+      <SignedOut>
+        <Button variant="ghost" className="flex items-center" asChild>
+          <Link href="/sign-in">
+            View All <ChevronRight className="ml-1 h-4 w-4" />
+          </Link>
+        </Button>
+      </SignedOut>
+
+    </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4" >
             {carMakes.map((make)=>{
