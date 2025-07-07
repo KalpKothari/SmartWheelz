@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { getCarById } from "@/actions/car-listing";
 import CarDetails from "./_components/car-details";
