@@ -10,7 +10,6 @@ import { Accordion } from "@/components/ui/accordion";
 import { AccordionItem } from "@/components/ui/accordion";
 import { AccordionContent } from "@/components/ui/accordion";
 import { AccordionTrigger } from "@/components/ui/accordion";
-import { SignedOut } from "@clerk/nextjs";
 import { faqItems } from "@/lib/data";
 import { getFeaturedCars } from "@/actions/home";
 
