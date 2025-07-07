@@ -1,10 +1,11 @@
 import React from "react";
 import { getCarById } from "@/actions/car-listing";
-import  CarDetails  from "./_components/car-details";
+import CarDetails from "./_components/car-details";
 import { notFound } from "next/navigation";
+import { auth } from "@clerk/nextjs"; // ✅ Clerk auth
 
 export async function generateMetadata({ params }) {
-  const { id } = await params;
+  const { id } = params;
   const result = await getCarById(id);
 
   if (!result.success) {
@@ -25,12 +26,27 @@ export async function generateMetadata({ params }) {
   };
 }
 
-const CarPage = async ({ params })=> {
-  // Fetch car details
-  const { id } = await params;
+const CarPage = async ({ params }) => {
+  const { id } = params;
+
+  // ✅ Get auth user
+  const { userId } = auth();
+
+  // ✅ If NOT signed in, block details
+  if (!userId) {
+    return (
+      <div className="container mx-auto px-4 py-12 text-center">
+        <h2 className="text-2xl font-bold mb-4">Login Required</h2>
+        <p className="text-gray-600">
+          Please sign in to view this car’s details.
+        </p>
+      </div>
+    );
+  }
+
+  // ✅ If signed in, show car details
   const result = await getCarById(id);
 
-  // If car not found, show 404
   if (!result.success) {
     notFound();
   }
@@ -40,6 +56,6 @@ const CarPage = async ({ params })=> {
       <CarDetails car={result.data} testDriveInfo={result.data.testDriveInfo} />
     </div>
   );
-}
+};
 
 export default CarPage;
