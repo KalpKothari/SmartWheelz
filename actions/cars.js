@@ -9,38 +9,36 @@ import { createClient } from "@/lib/supabase";
 import { auth } from "@clerk/nextjs/server";
 import { serializeCarData } from "@/lib/helper";
 
-
 // Function to convert File to base64
 async function fileToBase64(file) {
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    return buffer.toString("base64");
-  }
+  const bytes = await file.arrayBuffer();
+  const buffer = Buffer.from(bytes);
+  return buffer.toString("base64");
+}
 
 // Gemini AI integration for car image processing
 export async function processCarImageWithAI(file) {
-    try {
-      // Check if API key is available
-      if (!process.env.GEMINI_API_KEY) {
-        throw new Error("Gemini API key is not configured");
-      }
-  
-      // Initialize Gemini API
-      const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-  
-      // Convert image file to base64
-      const base64Image = await fileToBase64(file);
-  
-      // Create image part for the model
-      const imagePart = {
-        inlineData: {
-          data: base64Image,
-          mimeType: file.type,
-        },
+  try {
+    // ✅ FIX: don't throw, return safely
+    if (!process.env.GEMINI_API_KEY) {
+      return {
+        success: false,
+        error: "Gemini API key is not configured",
       };
+    }
 
-      // Define the prompt for car detail extraction
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+    const base64Image = await fileToBase64(file);
+
+    const imagePart = {
+      inlineData: {
+        data: base64Image,
+        mimeType: file.type,
+      },
+    };
+
     const prompt = `
     Analyze this car image and extract the following information:
     1. Make (manufacturer)
@@ -69,62 +67,74 @@ export async function processCarImageWithAI(file) {
       "confidence": 0.0
     }
 
-    For confidence, provide a value between 0 and 1 representing how confident you are in your overall identification.
     Only respond with the JSON object, nothing else.
   `;
 
-  // Get response from Gemini
-  const result = await model.generateContent([imagePart, prompt]);
-  const response = await result.response;
-  const text = response.text();
-  const cleanedText = text.replace(/```(?:json)?\n?/g, "").trim();
+    let result;
 
-   // Parse the JSON response
-   try {
-    const carDetails = JSON.parse(cleanedText);
-
-    // Validate the response format
-    const requiredFields = [
-      "make",
-      "model",
-      "year",
-      "color",
-      "bodyType",
-      "price",
-      "mileage",
-      "fuelType",
-      "transmission",
-      "description",
-      "confidence",
-    ];
-
-    const missingFields = requiredFields.filter(
-      (field) => !(field in carDetails)
-    );
-
-    if (missingFields.length > 0) {
-      throw new Error(
-        `AI response missing required fields: ${missingFields.join(", ")}`
-      );
+    // ✅ FIX: handle Gemini failure
+    try {
+      result = await model.generateContent([imagePart, prompt]);
+    } catch (err) {
+      console.error("Gemini API call failed:", err);
+      return {
+        success: false,
+        error: "Gemini API request failed",
+      };
     }
 
-    // Return success response with data
-    return {
-      success: true,
-      data: carDetails,
-    };
-  } catch (parseError) {
-    console.error("Failed to parse AI response:", parseError);
-    console.log("Raw response:", text);
+    const response = await result.response;
+    const text = response.text();
+    const cleanedText = text.replace(/```(?:json)?\n?/g, "").trim();
+
+    try {
+      const carDetails = JSON.parse(cleanedText);
+
+      const requiredFields = [
+        "make",
+        "model",
+        "year",
+        "color",
+        "bodyType",
+        "price",
+        "mileage",
+        "fuelType",
+        "transmission",
+        "description",
+        "confidence",
+      ];
+
+      const missingFields = requiredFields.filter(
+        (field) => !(field in carDetails)
+      );
+
+      if (missingFields.length > 0) {
+        throw new Error(
+          `AI response missing required fields: ${missingFields.join(", ")}`
+        );
+      }
+
+      return {
+        success: true,
+        data: carDetails,
+      };
+    } catch (parseError) {
+      console.error("Failed to parse AI response:", parseError);
+      console.log("Raw response:", text);
+      return {
+        success: false,
+        error: "Failed to parse AI response",
+      };
+    }
+  } catch (error) {
+    // ✅ FIX: proper logging + NO THROW
+    console.error("Gemini API error:", error);
+
     return {
       success: false,
-      error: "Failed to parse AI response",
+      error: error.message,
     };
   }
-} catch (error) {
-  console.error();
-  throw new Error("Gemini API error:" + error.message);
-}
 }
 
 // Add a car to the database with images
