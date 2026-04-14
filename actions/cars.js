@@ -27,7 +27,7 @@ export async function processCarImageWithAI(file) {
   
       // Initialize Gemini API
       const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-002" });
   
       // Convert image file to base64
       const base64Image = await fileToBase64(file);
