@@ -25,9 +25,12 @@ export async function processCarImageWithAI(file) {
         throw new Error("Gemini API key is not configured");
       }
   
-      // Initialize Gemini API
-      const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-002" });
+       // Initialize Gemini API
+        const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+        
+        // Using 'gemini-1.5-flash-002' to ensure compatibility with Vercel's current environment
+        const modelName = "gemini-1.5-flash-002";
+        const model = genAI.getGenerativeModel({ model: modelName });
   
       // Convert image file to base64
       const base64Image = await fileToBase64(file);
