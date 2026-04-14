@@ -1,10 +1,13 @@
 import { getDashboardData } from "@/actions/admin";
-import Dashboard  from "./_components/dashboard";
+import Dashboard from "./_components/dashboard";
 import React from "react";
+
+// THIS IS THE FIX:
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: "Dashboard | SmartWheelz Admin",
-  description: "Admin dashboard for Vehiql car marketplace",
+  description: "Admin dashboard for SmartWheelz car marketplace",
 };
 
 const AdminPage = async () => {
