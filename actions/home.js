@@ -59,11 +59,11 @@ export async function processImageSearch(file) {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
     // Primary model has highest free tier limits, fallbacks if quota hit
-    const modelNames = [
-      "gemini-1.5-flash-8b",
-      "gemini-2.0-flash-lite",
-      "gemini-1.5-flash",
-    ];
+const modelNames = [
+  "gemini-1.5-flash-8b-001",
+  "gemini-2.0-flash-lite-001",
+  "gemini-1.5-flash-001",
+];
 
     const base64Image = await fileToBase64(file);
     const imagePart = {
