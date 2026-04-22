@@ -31,7 +31,7 @@ export async function processCarImageWithAI(file) {
       const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
       // Use stable model name without version suffix
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
       const base64Image = await fileToBase64(file);
 
