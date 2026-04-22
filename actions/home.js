@@ -60,9 +60,9 @@ export async function processImageSearch(file) {
 
     // Primary model has highest free tier limits, fallbacks if quota hit
 const modelNames = [
-  "gemini-1.5-flash-8b-001",
-  "gemini-2.0-flash-lite-001",
-  "gemini-1.5-flash-001",
+  "gemini-1.5-flash-latest",
+  "gemini-2.0-flash-lite",
+  "gemini-2.0-flash",
 ];
 
     const base64Image = await fileToBase64(file);
